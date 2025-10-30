@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ProjectModel from "./Project.model.js";
 
 const UserShema = new mongoose.Schema({
   name: {
@@ -30,4 +31,13 @@ const UserShema = new mongoose.Schema({
   },
 });
 
+async function cascadeDelete(next) {
+  try {
+    await ProjectModel.deleteMany({ createdBy: this._id });
+  } catch (error) {
+    next(error);
+  }
+}
+UserShema.pre("deleteMany", { document: true, query: true }, cascadeDelete);
+UserShema.pre("deleteOne", { document: true, query: true }, cascadeDelete);
 export default mongoose.model("User", UserShema);
