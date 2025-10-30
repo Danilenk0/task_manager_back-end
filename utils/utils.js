@@ -9,3 +9,10 @@ export const hashPassword = async (password) => {
   const hashedPassword = await bcrypt.hash(password, await bcrypt.genSalt(10));
   return hashedPassword;
 };
+
+export const showServerError = (textErrorPoint) => {
+  console.error(`${textErrorPoint}, error: ${error.message}`);
+  res.status(500).json({
+    message: "Internal server error",
+  });
+};

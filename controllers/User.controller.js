@@ -1,5 +1,5 @@
 import UserModel from "../models/User.model.js";
-import { createToken, hashPassword } from "../utils/utils.js";
+import { createToken, hashPassword, showServerError } from "../utils/utils.js";
 import bcrypt from "bcrypt";
 
 class UserController {
@@ -36,10 +36,7 @@ class UserController {
         },
       });
     } catch (error) {
-      console.error(`UserController.registration error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("UserController.registration");
     }
   }
   static async authorization(req, res) {
@@ -72,10 +69,7 @@ class UserController {
         message: "Welcome",
       });
     } catch (error) {
-      console.error(`UserController.authorization, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("UserController.authorization");
     }
   }
   static async getAll(req, res) {
@@ -83,10 +77,7 @@ class UserController {
       const users = await UserModel.find();
       res.status(200).json(users);
     } catch (error) {
-      console.error(`UserController.getAll error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("UserController.getAll");
     }
   }
   static async getOne(req, res) {
@@ -103,10 +94,7 @@ class UserController {
 
       res.status(200).json(user);
     } catch (error) {
-      console.error(`UserController.getOne error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("UserController.getOne");
     }
   }
   static async getMe(req, res) {
@@ -119,10 +107,7 @@ class UserController {
       }
       res.status(200).json(user);
     } catch (error) {
-      console.error(`UserController.getMe, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server erorr",
-      });
+      showServerError("UserController.getMe");
     }
   }
   static async deleteMe(req, res) {
@@ -135,10 +120,7 @@ class UserController {
       });
       res.cookie("token", "");
     } catch (error) {
-      console.error(`UserController.deleteMe, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("UserController.deleteMe");
     }
   }
   static async deleteOne(req, res) {
@@ -155,7 +137,7 @@ class UserController {
         message: "The user was successfully deleted",
       });
     } catch (error) {
-      console.error(`UserController.deleteOne, error: ${error.message}`);
+      showServerError("UserController.deleteOne");
     }
   }
 }

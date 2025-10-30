@@ -9,10 +9,7 @@ class ProjectController {
 
       return res.status(200).json(projects);
     } catch (error) {
-      console.error(`ProjectController.getAll, error:${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("ProjectController.getAll");
     }
   }
   static async getOne(req, res) {
@@ -30,10 +27,7 @@ class ProjectController {
       }
       res.status(200).json(project);
     } catch (error) {
-      console.error(`ProjectController.getOne, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("ProjectController.getOne");
     }
   }
   static async create(req, res) {
@@ -48,10 +42,7 @@ class ProjectController {
       }
       res.status(201).json(project);
     } catch (error) {
-      console.error(`ProjectController.create, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("ProjectController.create");
     }
   }
   static async update(req, res) {
@@ -71,10 +62,7 @@ class ProjectController {
       }
       res.status(200).json(updatedProject);
     } catch (error) {
-      console.error(`ProjectController.update, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("PProjectController.update");
     }
   }
   static async delete(req, res) {
@@ -90,10 +78,7 @@ class ProjectController {
         message: "The project was successfully deleted",
       });
     } catch (error) {
-      console.error(`ProjectController.delete, error: ${error.message}`);
-      res.status(500).json({
-        message: "Internal server error",
-      });
+      showServerError("ProjectController.delete");
     }
   }
 }
