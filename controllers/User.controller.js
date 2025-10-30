@@ -125,6 +125,39 @@ class UserController {
       });
     }
   }
+  static async deleteMe(req, res) {
+    try {
+      const id = req.userId;
+      const deletedUser = await UserModel.findById({ _id: id });
+      await deletedUser.deleteOne();
+      res.status(204).json({
+        message: "The user was successfully deleted",
+      });
+      res.cookie("token", "");
+    } catch (error) {
+      console.error(`UserController.deleteMe, error: ${error.message}`);
+      res.status(500).json({
+        message: "Internal server error",
+      });
+    }
+  }
+  static async deleteOne(req, res) {
+    try {
+      const userId = req.params.id;
+      const deletedUser = await UserModel.findById({ _id: userId });
+      if (!deletedUser) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+      await deletedUser.deleteOne();
+      res.status(204).json({
+        message: "The user was successfully deleted",
+      });
+    } catch (error) {
+      console.error(`UserController.deleteOne, error: ${error.message}`);
+    }
+  }
 }
 
 export default UserController;

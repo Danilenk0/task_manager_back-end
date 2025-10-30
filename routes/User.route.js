@@ -8,5 +8,7 @@ router.post("/authorization", UserController.authorization);
 router.get("/", CheckAuth, UserController.getAll);
 router.get("/me", CheckAuth, UserController.getMe);
 router.get("/:id", CheckAuth, UserController.getOne);
+router.delete("/me", CheckAuth, UserController.deleteMe);
+router.delete("/:id", CheckAuth, UserController.deleteOne);
 
 export default router;
