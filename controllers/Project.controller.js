@@ -68,12 +68,13 @@ class ProjectController {
   static async delete(req, res) {
     try {
       const projectId = req.params.id;
-      const deletedProject = await ProjectModel.findByIdAndDelete(projectId);
+      const deletedProject = await ProjectModel.findById(projectId);
       if (!deletedProject) {
         return res.status(404).json({
           message: "Project not found",
         });
       }
+      await deletedProject.deleteOne();
       res.status(204).json({
         message: "The project was successfully deleted",
       });

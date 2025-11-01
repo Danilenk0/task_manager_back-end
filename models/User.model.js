@@ -33,7 +33,10 @@ const UserShema = new mongoose.Schema({
 
 async function cascadeDelete(next) {
   try {
-    await ProjectModel.deleteMany({ createdBy: this._id });
+    const projects = await ProjectModel.find({ createdBy: this._id });
+    for (let project of projects) {
+      await project.deleteOne();
+    }
     next();
   } catch (error) {
     next(error);

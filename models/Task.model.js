@@ -33,7 +33,7 @@ const TaskShema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Data.now,
+    default: Date.now,
   },
   deadline: {
     type: Date,
@@ -53,4 +53,4 @@ const TaskShema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.model("Tasl", TaskShema);
+export default mongoose.model("Task", TaskShema);

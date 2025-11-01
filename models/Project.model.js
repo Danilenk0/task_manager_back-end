@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import TaskModel from "./Task.model.js";
 
 const ProjectShema = new mongoose.Schema({
   name: {
@@ -25,5 +26,17 @@ const ProjectShema = new mongoose.Schema({
     type: Date,
   },
 });
+
+async function cascadeDelete(next) {
+  try {
+    await TaskModel.deleteMany({ project_id: this._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+ProjectShema.pre("deleteMany", { document: true, query: true }, cascadeDelete);
+ProjectShema.pre("deleteOne", { document: true, query: true }, cascadeDelete);
 
 export default mongoose.model("Project", ProjectShema);
