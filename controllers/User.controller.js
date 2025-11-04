@@ -24,11 +24,11 @@ class UserController {
       const token = createToken(user._id);
       res.cookie("token", token, {
         httpOnly: true,
-        sameSite: "strict",
+        secure: false,
+        sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
       res.status(201).json({
-        message: "Registration successful",
         user: {
           id: user._id,
           email: user.email,
@@ -36,7 +36,7 @@ class UserController {
         },
       });
     } catch (error) {
-      showServerError("UserController.registration");
+      showServerError(res, "UserController.registration", error);
     }
   }
   static async authorization(req, res) {

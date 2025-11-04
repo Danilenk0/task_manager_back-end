@@ -5,12 +5,19 @@ import UserRouter from "./routes/User.route.js";
 import ProjectRouter from "./routes/Project.route.js";
 import TaskRouter from "./routes/Task.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use("/user", UserRouter);
 app.use("/project", ProjectRouter);
 app.use("/task", TaskRouter);

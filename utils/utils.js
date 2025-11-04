@@ -10,7 +10,7 @@ export const hashPassword = async (password) => {
   return hashedPassword;
 };
 
-export const showServerError = (textErrorPoint) => {
+export const showServerError = (res, textErrorPoint, error) => {
   console.error(`${textErrorPoint}, error: ${error.message}`);
   res.status(500).json({
     message: "Internal server error",
