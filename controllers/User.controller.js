@@ -1,5 +1,10 @@
 import UserModel from "../models/User.model.js";
-import { createToken, hashPassword, showServerError } from "../utils/utils.js";
+import {
+  createToken,
+  hashPassword,
+  showServerError,
+  sendToken,
+} from "../utils/utils.js";
 import bcrypt from "bcrypt";
 
 class UserController {
@@ -22,12 +27,7 @@ class UserController {
       });
 
       const token = createToken(user._id);
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
+      sendToken(res, token);
       res.status(201).json({
         user: {
           id: user._id,
@@ -60,11 +60,7 @@ class UserController {
       }
       const token = createToken(existingUser._id);
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
+      sendToken(res, token);
       return res.status(200).json({
         message: "Welcome",
       });

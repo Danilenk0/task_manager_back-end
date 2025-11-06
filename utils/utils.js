@@ -16,3 +16,12 @@ export const showServerError = (res, textErrorPoint, error) => {
     message: "Internal server error",
   });
 };
+
+export const sendToken = (res, token) => {
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "Lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+};
