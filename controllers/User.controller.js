@@ -68,6 +68,20 @@ class UserController {
       showServerError("UserController.authorization");
     }
   }
+  static async logout(req, res) {
+    try {
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "strict",
+        path: "/",
+      });
+
+      res.status(204).json({});
+    } catch (error) {
+      showServerError(res, "UserController.logout, error:", error);
+    }
+  }
   static async getAll(req, res) {
     try {
       const users = await UserModel.find();
